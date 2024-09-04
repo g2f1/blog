@@ -25,3 +25,6 @@ function Enable-PSScriptBlockLogging {
 }
 ```
 
+- name: Microsoft-Windows-PowerShell/Operational
+  event_ids: 4103, 4104
+
